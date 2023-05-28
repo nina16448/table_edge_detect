@@ -111,7 +111,7 @@ def get_edge(P):
     # 讀取圖片
     img = P
     # 縮小圖像
-    img = cv2.resize(img, None, fx=0.6, fy=0.6, interpolation=cv2.INTER_AREA)
+    # img = cv2.resize(img, None, fx=0.6, fy=0.6, interpolation=cv2.INTER_AREA)
     # 檢查圖像的形狀
     height, width, channels = img.shape
     # 如果長度大於寬度，則旋轉圖像
@@ -308,10 +308,10 @@ def get_edge(P):
     if flag == False:
         intersections = []
         # 設定為圖片的四個角的座標點
-        intersections.append((0, 0))  # 左上角
-        intersections.append((0, img.shape[1]))  # 右上角
-        intersections.append((img.shape[0], 0))  # 左下角
-        intersections.append((img.shape[0], img.shape[1]))  # 右下角
+        intersections.append(np.array([0, 0]))  # 左上角
+        intersections.append(np.array([img.shape[1], 0]))  # 右上角
+        intersections.append(np.array([0, img.shape[0]]))  # 左下角
+        intersections.append(np.array([img.shape[1], img.shape[0]]))  # 右下角
 
     draw_lines_between_points(img, intersections)
 
