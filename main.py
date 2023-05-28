@@ -9,10 +9,10 @@ import torch
 def main():
     model = torch.hub.load("ultralytics/yolov5", "custom", path="../v8_m.pt")
     # 設定 IoU 門檻值
-    model.iou = 0.3
+    model.iou = 0.1
 
     # 設定信心門檻值
-    model.conf = 0.5
+    model.conf = 0.1
 
     input_video_path = "../test5.mp4"
     cap = cv2.VideoCapture(input_video_path)
@@ -35,6 +35,10 @@ def main():
             warped_frame = TS.exe_pic(frame, intersections)
 
         results = model(warped_frame)
+        # 將檢測結果繪製到影像上
+        if len(results.xyxy) > 0:
+            warped_frame = results.render()[0]
+
         # 顯示變換後的幀
         cv2.imshow("Warped Frame", warped_frame)
         results.print()
