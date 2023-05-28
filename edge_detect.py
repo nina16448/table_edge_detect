@@ -232,10 +232,18 @@ def get_edge(P):
     print(len(edge_line))
 
     # input("按下 Enter 鍵繼續...")
-
+    flag = True
     if len(edge_line) != 4:
+        flag = False
         print("Not found edge.")
-        
+        # 設定為圖片的四個角的座標點
+        edge_line = [
+            (0, 0, 0, height),
+            (0, 0, width, 0),
+            (width, height, 0, height),
+            (width, height, width, 0),
+        ]
+
         # return img, img_original, intersections, False
 
     center_coordinates = (int(img_center[0]), int(img_center[1]))
@@ -296,6 +304,14 @@ def get_edge(P):
             ):
                 continue
             intersections.append(np.array(intersection))
+
+    if flag == False:
+        intersections = []
+        # 設定為圖片的四個角的座標點
+        intersections.append((0, 0))  # 左上角
+        intersections.append((0, img.shape[1]))  # 右上角
+        intersections.append((img.shape[0], 0))  # 左下角
+        intersections.append((img.shape[0], img.shape[1]))  # 右下角
 
     draw_lines_between_points(img, intersections)
 
