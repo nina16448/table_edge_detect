@@ -96,6 +96,7 @@ def prev_exe(pic):
 
 def exe_pic(P, intersections):
     # 縮小圖像
+    imge = P
     # imge = cv2.resize(P, None, fx=0.6, fy=0.6, interpolation=cv2.INTER_AREA)
     # 檢查圖像的形狀
     height, width, channels = imge.shape

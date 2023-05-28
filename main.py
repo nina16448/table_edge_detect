@@ -3,9 +3,17 @@ import Transformation as TS
 import sys
 import cv2
 import numpy as np
+import torch
 
 
 def main():
+    model = torch.hub.load("ultralytics/yolov5", "custom", path="../v8_m.pt")
+    # 設定 IoU 門檻值
+    model.iou = 0.3
+
+    # 設定信心門檻值
+    model.conf = 0.5
+
     input_video_path = "../test5.mp4"
     cap = cv2.VideoCapture(input_video_path)
     if not cap.isOpened():
@@ -26,8 +34,10 @@ def main():
         else:
             warped_frame = TS.exe_pic(frame, intersections)
 
+        results = model(warped_frame)
         # 顯示變換後的幀
         cv2.imshow("Warped Frame", warped_frame)
+        results.print()
 
         # 等待 1 毫秒，並檢查是否有按下 q 鍵，如果有，則退出循環
         if cv2.waitKey(1) & 0xFF == ord("q"):
