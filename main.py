@@ -26,6 +26,8 @@ def main():
     while True:
         ret, frame = cap.read()
 
+        height, width, channels = frame.shape
+
         if not ret:
             break  # 如果讀不到幀，退出循環
 
@@ -35,14 +37,19 @@ def main():
         else:
             warped_frame = TS.exe_pic(frame, intersections)
             warped_frame = cv2.filter2D(warped_frame, -1, kernel)
-        # warped_frame = cv2.resize(
-        #     warped_frame, (640, 640), interpolation=cv2.INTER_AREA
-        # )
+
+        warped_frame = cv2.resize(
+            warped_frame, (640, 640), interpolation=cv2.INTER_AREA
+        )
 
         results = model(warped_frame)
         # 將檢測結果繪製到影像上
         if len(results.xyxy) > 0:
             warped_frame = results.render()[0]
+
+        warped_frame = cv2.resize(
+            warped_frame, (1280, 640), interpolation=cv2.INTER_AREA
+        )
 
         # 顯示變換後的幀
         cv2.imshow("Warped Frame", warped_frame)
