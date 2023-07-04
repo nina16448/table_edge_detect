@@ -4,6 +4,7 @@ import sys
 import cv2
 import numpy as np
 import torch
+import sand_info as SI
 
 
 def main():
@@ -28,7 +29,7 @@ def main():
 
         height, width, channels = frame.shape
 
-        if not ret:
+        if not ret: 
             break  # 如果讀不到幀，退出循環
 
         # 對每一幀執行邊緣提取和透視變換
@@ -53,7 +54,7 @@ def main():
 
         # 顯示變換後的幀
         cv2.imshow("Warped Frame", warped_frame)
-        results.print()
+        results.print()  # results 是 yolo v5 回傳的結果，有
 
         # 等待 1 毫秒，並檢查是否有按下 q 鍵，如果有，則退出循環
         if cv2.waitKey(1) & 0xFF == ord("q"):
