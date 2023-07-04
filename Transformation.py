@@ -115,6 +115,6 @@ def exe_pic(P, intersections):
     M = cv2.getPerspectiveTransform(intersections, dst_points)
 
     # 進行透視變換
-    warped_img = cv2.warpPerspective(imge, M, (width, height))
+    warped_img = cv2.warpPerspective(imge, M, (width, height), flags=cv2.INTER_LANCZOS4)
 
     return warped_img
